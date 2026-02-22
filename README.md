@@ -49,11 +49,19 @@ one for the **console side** (`receiver_nes.cpp`).  Copy each file into its
 own project directory and save it there as `main.cpp` before building.
 Flash the appropriate sketch to each ESP32 and power them up.
 
-> **Important:** on the **receiver/console** end you **must not** wire the
-> VCC line from the cable to the ESP32.  The console provides 5 V and if
-> that is fed into the development board it will destroy the chip.  Only
-> connect GND, CLOCK, LATCH and DATA on the receiver side; power the ESP32
-> separately (USB, battery, etc.).
+**Important (Receiver / Console Side)**:
+> The console provides 5 V.  Even if some ESP32 boards accept 5 V on the VIN
+> pin, designs vary and back‑powering can **damage the regulator or chip**.
+> To be safe, don’t connect the NES VCC line to the ESP32 at all;
+> treat the cable as signal‑only.
+
+> Only hook up GND, CLOCK, LATCH and DATA on the receiver dongle.
+> Power the ESP32 from USB, a battery, or a regulated 3.3 V supply instead.
+
+> Also remember: standard ESP32 GPIO are **not** 5 V tolerant.  If you're in
+doubt about signal levels, use a proper level shifter (don’t trust AliExpress
+> or Temu; choose a reputable brand) or a series resistor to protect the pins.
+> A good example datasheet is available here: [KY-051 level‑translator PDF](https://asset.conrad.com/media10/add/160267/c1/-/de/001695385DS01/datablad-1695385-voltage-translator-level-shifter.pdf).
 
 ![pinout](assets/pinout.jpg)
 
@@ -107,6 +115,26 @@ your setup doubles as a TAS console verifier.
 
 
 ## License
-* No License, go and have fun, all i ask, spread the word, keep the NES alive, and tell people where to find this repo if they ask!
-* And dont slap your own License on it!
 
+* This project is released in the spirit of the Unlicense.
+  Do whatever you want with it — fork it, modify it, build on it, improve it.
+
+* All I ask is simple:
+
+  If you use or modify it, keep a reference to the original repo.
+
+  Don’t re-upload or fork it unchanged and claim it as your own work.
+
+  Let’s keep things fair and keep the NES alive.
+
+  This project is provided as-is, without warranty of any kind.
+  I’m not responsible for any damage to your controller, console, or other hardware — especially if you didn’t read the sketches or feed 5V where it doesn’t belong.
+
+ Have fun. Build cool stuff. Share it.
+
+## Personal Notes
+
+* Last note: Pull Requests are always welcome, however, i would like a demo in form of a screen recording or video of the new feature to see it working,
+  as your hardware might be slightly different than mine, and i might not be able to reproduce the feature.
+  Important for the video: Only Display the feature in action and maybe the required Hardware mod, **NOT YOURSELF** or anything personal.
+  The Internet is unsafe as is already, lets keep it safe for us Retro Nerds! :) 
