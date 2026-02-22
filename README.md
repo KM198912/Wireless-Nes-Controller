@@ -138,3 +138,10 @@ your setup doubles as a TAS console verifier.
   as your hardware might be slightly different than mine, and i might not be able to reproduce the feature.
   Important for the video: Only Display the feature in action and maybe the required Hardware mod, **NOT YOURSELF** or anything personal.
   The Internet is unsafe as is already, lets keep it safe for us Retro Nerds! :) 
+
+## Hardware Pictures
+
+* Pictures of my working Prototype, i know its not pretty and hacked together, but for a project i started on a whim, and POC, totally acceptable
+
+![Controller dongle](assets/sender.jpg)  
+![Console dongle](assets/receiver.jpg)
