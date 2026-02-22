@@ -83,3 +83,16 @@ modify and share.
 * I built the adapter as a cable‑cut dongle deliberately so the controller
   itself stays untouched – just plug it in like a normal extension and the
   wireless circuitry is entirely external.
+* I already have an SNES about to receive a similar treatment – I’d like to
+build a dongle for it too.  Off‑the‑shelf wireless pads and cheap China
+clones exist, as well as bespoke ‘8bitdo’ controllers, but none of them
+feel quite right in hand like the original.  Adding the built‑in visualiser
+could be a neat touch for streamers too.
+* **Bonus bonus!**  You could modify the Receiver sketch to read from an
+SD‑card module and feed it a TAS (tool‑assisted‑speedrun) file – suddenly
+your setup doubles as a TAS console verifier.
+
+
+## License
+* No License, go and have fun, all i ask, spread the word, keep the NES alive, and tell people where to find this repo if they ask!
+* And dont slap your own License on it!
