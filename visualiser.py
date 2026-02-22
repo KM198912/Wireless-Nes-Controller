@@ -1,12 +1,24 @@
 import serial, threading
+import serial.tools.list_ports
 from tkinter import *
+from tkinter import messagebox
+from tkinter import Toplevel
 from PIL import Image, ImageTk
 import xml.etree.ElementTree as ET
 import os
 from queue import Queue
+import configparser
 
-PORT = 'COM6'          # change to the receiver’s port
-BAUD = 9600          # original firmware uses 115200 (receiver too)
+# keep track of the single root Tk instance that underpins all windows
+_ROOT = None
+
+CFGFILE = 'visualiser.ini'
+
+# load or create configuration
+config = configparser.ConfigParser()
+config.read(CFGFILE)
+PORT = config.get('serial', 'port', fallback='COM6')
+BAUD = config.getint('serial', 'baud', fallback=115200)
 
 # button bit masks, same as in the ESP code
 BTN = {
@@ -20,9 +32,14 @@ BTN = {
     'RIGHT':  1 << 7,
 }
 
-class PadViewer(Tk):
-    def __init__(self):
-        super().__init__()
+class PadViewer(Toplevel):
+    def __init__(self, parent=None):
+        # ensure we have a root to attach to
+        global _ROOT
+        if _ROOT is None:
+            _ROOT = Tk()
+            _ROOT.withdraw()
+        super().__init__(parent or _ROOT)
         self.title("NES Spy")
         self.configure(bg='lime')  # set root window background
         # thread-safe queue for incoming states
@@ -107,7 +124,80 @@ def reader_thread(viewer):
             else:
                 buf.append(b[0])
 
+# helper routines for config
+
+def save_config(port, baud):
+    cfg = configparser.ConfigParser()
+    cfg['serial'] = {'port': port, 'baud': str(baud)}
+    with open(CFGFILE, 'w') as f:
+        cfg.write(f)
+
+
+def show_config_dialog():
+    """Display a modal dialog for serial settings.
+
+    Returns a dict with keys 'port', 'baud' and 'cancel'.
+    If the user cancels (or closes the window) the 'cancel' flag is True.
+
+    Uses a Toplevel window so we only ever create a single Tk() root.
+    """
+    global _ROOT
+    if _ROOT is None:
+        _ROOT = Tk()
+        _ROOT.withdraw()          # hide the invisible master window
+
+    result = {'port': PORT, 'baud': BAUD, 'cancel': False}
+
+    dlg = Toplevel(_ROOT)
+    dlg.title('Serial Settings')
+    Label(dlg, text='COM Port:').grid(row=0, column=0, sticky='w')
+    port_var = StringVar(value=PORT)
+    Entry(dlg, textvariable=port_var).grid(row=0, column=1)
+    Label(dlg, text='Baud:').grid(row=1, column=0, sticky='w')
+    baud_var = StringVar(value=str(BAUD))
+    Entry(dlg, textvariable=baud_var).grid(row=1, column=1)
+
+    def apply():
+        # user accepted new values
+        try:
+            baud_val = int(baud_var.get())
+        except ValueError:
+            baud_val = 115200
+        result['port'] = port_var.get()
+        result['baud'] = baud_val
+        save_config(result['port'], result['baud'])
+        dlg.destroy()
+
+    def cancel():
+        result['cancel'] = True
+        dlg.destroy()
+
+    Button(dlg, text='Go', command=apply).grid(row=2, column=0)
+    Button(dlg, text='Cancel', command=cancel).grid(row=2, column=1)
+    # handle window close as cancel too
+    dlg.protocol("WM_DELETE_WINDOW", cancel)
+
+    # make the dialog modal
+    dlg.transient(_ROOT)
+    dlg.grab_set()
+    _ROOT.wait_window(dlg)
+
+    return result
+
+
 if __name__ == '__main__':
+    # keep asking until the user picks a real port or decides to quit
+    while True:
+        res = show_config_dialog()
+        if res.get('cancel'):
+            import sys
+            sys.exit(0)
+        PORT = res['port']
+        BAUD = res['baud']
+        if any(p.device == PORT for p in serial.tools.list_ports.comports()):
+            break
+        messagebox.showerror("Port not found", f"Selected serial port '{PORT}' does not exist.")
+
     v = PadViewer()
     t = threading.Thread(target=reader_thread, args=(v,), daemon=True)
     t.start()

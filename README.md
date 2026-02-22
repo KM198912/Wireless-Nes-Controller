@@ -63,9 +63,20 @@ Flash the appropriate sketch to each ESP32 and power them up.
 
 When I stream on Twitch I like to show my button presses.  That’s what
 `visualiser.py` does – it reads the serial output from the receiver ESP and
-renders a little NES skin with blobs for the pressed buttons.  Just adjust
-the COM port at the top of the script and run it (it works on Windows,
-Linux, etc.).  It’s basically a cross‑platform remake of NintendoSpy.
+renders a little NES skin with blobs for the pressed buttons.  The script
+validates the serial port and baud rate you enter and lets you cancel
+before the main window opens.  Make sure the receiver is configured to use
+the same baud rate (for example 9600 or 115200); if it doesn’t, the
+visualiser simply won’t receive the expected bytes and the pad will remain
+blank rather than updating.
+Once a real port is selected the GUI runs on
+Windows, Linux, macOS, etc.  It’s basically a cross‑platform remake of
+NintendoSpy.
+
+* Included are a `visualiser.bat` and `.sh` file for cross‑platform launch
+  on Linux/Mac make sure to `chmod +x` the `.sh` file
+* The launcher scripts will check for Python 3 and the required modules,
+  and notify you if something is missing
 
 ![visualiser](assets/visualiser.png)
 
