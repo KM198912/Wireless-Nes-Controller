@@ -19,7 +19,9 @@ because it was fun to build and I think other retro gamers will enjoy it too.
 
 * 2× ESP32 development boards (any flavour will do)  
 * A NES extension cable (the long one between pad and console)  
-* Female jumper wires, heat‑shrink and optional hot glue  
+* Female jumper wires, heat‑shrink and optional hot glue.  (If you
+  really want to go all‑in you can solder the leads directly to the ESP32 or
+  even design a little PCB with the connector built in – for example you can grab the connector from Europe with faster shipping at [Zedlabz](https://www.zedlabz.com/products/controller-connector-port-for-nintendo-nes-console-7-pin-90-degree-replacement-2-pack-black-zedlabz?srsltid=AfmBOorLNYLtyGLcgUVKGPlg8VS46CnAKE-XDuBqMxV1WkUjW-lOKhSV) )
 * A multimeter for tracing the four signal lines  
 * An original NES controller and a working NES console  
 
@@ -96,3 +98,4 @@ your setup doubles as a TAS console verifier.
 ## License
 * No License, go and have fun, all i ask, spread the word, keep the NES alive, and tell people where to find this repo if they ask!
 * And dont slap your own License on it!
+
