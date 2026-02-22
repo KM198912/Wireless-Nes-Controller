@@ -117,7 +117,7 @@ your setup doubles as a TAS console verifier.
 ## License
 
 * This project is released in the spirit of the Unlicense.
-  Do whatever you want with it — fork it, modify it, build on it, improve it.
+  Do whatever you want with it — fork it, modify it, build on it, improve it, just dont make kittens cry, or build a Space Rocket with it.
 
 * All I ask is simple:
 
