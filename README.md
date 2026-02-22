@@ -42,8 +42,9 @@ example code uses pins 21, 22 and 23, but you can remap them by editing the
 `#define` values in the `.cpp` files.
 
 Then create two separate PlatformIO/Arduino projects: one for the
-**controller side** (`sender_controller.cpp`), and one for the **console side**
-(`receiver_nes.cpp`) then rename them to main.cpp in their own project folders.
+**controller side** (the sketch is provided as `sender_controller.cpp`), and
+one for the **console side** (`receiver_nes.cpp`).  Copy each file into its
+own project directory and save it there as `main.cpp` before building.
 Flash the appropriate sketch to each ESP32 and power them up.
 
 > **Important:** on the **receiver/console** end you **must not** wire the
@@ -72,3 +73,13 @@ Have fun soldering – and if you print a little NES‑style case for the dongle
 set of stylus, or RGB LEDs, I’d love to see pictures!  This project is meant
 to be a playful hack, not a serious commercial product, so feel free to
 modify and share.
+
+## Fun facts
+
+* The original prototype used AP mode and UDP between the two boards.  It
+  worked… except for a bizarre bug where pressing **Right** on the D‑pad
+  sometimes produced a phantom **A** press.  After a few hours of chasing
+  ghosts I rewrote the link over BLE and the problem vanished.
+* I built the adapter as a cable‑cut dongle deliberately so the controller
+  itself stays untouched – just plug it in like a normal extension and the
+  wireless circuitry is entirely external.
