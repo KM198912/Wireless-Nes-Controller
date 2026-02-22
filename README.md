@@ -81,6 +81,12 @@ Once a real port is selected the GUI runs on
 Windows, Linux, macOS, etc.  It’s basically a cross‑platform remake of
 NintendoSpy.
 
+If you’d rather hook an ESP32 directly to the controller and print the
+raw byte (or use the same board as a sniffer), there’s a simpler
+`visualiser_snes.py` in the repo.  It uses the same skin/config dialog
+but expects lines containing a hex state (`0x3F` or `3F`) instead of the
+receiver’s eight‑byte packet.
+
 * Included are a `visualiser.bat` and `.sh` file for cross‑platform launch
   on Linux/Mac make sure to `chmod +x` the `.sh` file
 * The launcher scripts will check for Python 3 and the required modules,
@@ -138,6 +144,7 @@ your setup doubles as a TAS console verifier.
   as your hardware might be slightly different than mine, and i might not be able to reproduce the feature.
   Important for the video: Only Display the feature in action and maybe the required Hardware mod, **NOT YOURSELF** or anything personal.
   The Internet is unsafe as is already, lets keep it safe for us Retro Nerds! :) 
+* Take a look at the [Todo](todo.md) to see what needs to be done if you want to Contribute!
 
 ## Hardware Pictures
 
