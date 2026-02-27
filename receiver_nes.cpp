@@ -61,7 +61,8 @@ static void notifyCallback(
         pendingState = mapped;
         releasePending = false;
     } else {
-        releasePending = true;
+        pendingState = 0;      // clear immediately
+        releasePending = true; // keep this as a safety net
     }
 }
 
